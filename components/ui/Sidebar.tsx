@@ -17,8 +17,7 @@ const menuItems: string[] = ["Inbox", "Starred", "Send email", "Draft"];
 export const Sidebar = () => {
 
   const {sideMenuOpen,openSideMenu, closeSideMenu} = useContext(UiContext)
-  console.log(sideMenuOpen)
-  return (
+   return (
     <Drawer
       onClose={() => closeSideMenu()}
 

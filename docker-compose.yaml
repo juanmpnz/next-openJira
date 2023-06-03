@@ -1,7 +1,7 @@
 # Creo la database mongo en docker
 services: 
     entriesdb:
-       image: mongo:5.0.0
+       image: mongo
        container_name: entries-database
        ports:
          - 27017:27017
