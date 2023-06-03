@@ -48,16 +48,17 @@ export const NewEntrie = () => {
             startIcon={<ControlPointIcon />}
             variant="outlined"
           >
-            Agregar entrada
+            Agregar tarea
           </Button>
         </Box>
       )}
 
-      <Box padding={1} display={"flex"} justifyContent={"space-between"}>
+      <Box padding={1} display={"flex"} justifyContent={"flex-end"} >
         <Button
           onClick={handleClickAdd}
           endIcon={<SaveIcon />}
           variant="outlined"
+          sx={{marginRight: 2}}
         >
           Guardar
         </Button>
