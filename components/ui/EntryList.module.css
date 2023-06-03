@@ -1,0 +1,5 @@
+.dragging{
+    background-color: rgba(87, 87, 87, 0.1);
+    border-radius: 4px;
+    border: 1px dotted gray;
+}
