@@ -13,12 +13,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { id } = req.query;
-
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: "El id es invlaido" });
-  }
- 
   switch (req.method) {
     case "PUT":
       return updateEntry(req, res);
@@ -59,7 +53,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   } catch (error) {
     await db.disconnect();
     const err: any = JSON.stringify(error);
-    /* return res.status(400).json({ message: err.errors.status.message }); */
+    return res.status(400).json({ message: err.errors.status.message });
   }
 };
 

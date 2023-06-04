@@ -25,7 +25,7 @@ const getEntries = async (res: NextApiResponse<Data>) => {
   await db.connect();
   const entries = await Entry.find().sort({ createdAt: "ascending" });
   await db.disconnect();
-  res.status(200).json(entries);
+  return res.status(200).json(entries);
 };
 
 const addEntry = async (req: NextApiRequest, res: NextApiResponse) => {
