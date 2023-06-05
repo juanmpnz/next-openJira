@@ -12,5 +12,5 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(201).json({secret: process.env.SECRET_KEY || "No esta", message: "John Doe", ok: true, method: req.method || "No hay method" });
+ return res.status(201).json({secret: process.env.SECRET_KEY || "No esta", message: "John Doe", ok: true, method: req.method || "No hay method" });
 }
