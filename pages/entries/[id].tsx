@@ -28,9 +28,11 @@ interface Props {
 }
 
 const validStatus = ["pending", "in-progress", "finished"];
+
 const EntryPage: NextPage<Props> = ({ entry }) => {
-  const { onEntryUpdated } = useContext(EntriesContext);
-  const { enqueueSnackbar } = useSnackbar()
+  const router = useRouter();
+  const { onEntryUpdated, onEntryDeleted } = useContext(EntriesContext);
+  const { enqueueSnackbar } = useSnackbar();
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touch, setTouch] = useState(false);
@@ -48,11 +50,18 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
     const updateEntry = {
       ...entry,
       status,
-      descriptio: inputValue,
+      description: inputValue,
     };
     onEntryUpdated(updateEntry);
-    enqueueSnackbar('Tarea actualizada')
-   };
+    enqueueSnackbar("Tarea actualizada");
+  };
+
+  const onDeleteEntry = () => {
+    const { _id } = entry;
+    onEntryDeleted(_id as string);
+    enqueueSnackbar("Tarea eliminada");
+    return router.push("/");
+  };
 
   return (
     <Layout title="Entrie">
@@ -61,7 +70,7 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
           <Card>
             <CardHeader
               title="Tarea"
-              subheader={`Creada hace ${entry.createdAt} minutos`}
+              subheader={dateFunction.getFormatDistanceToNow(entry.createdAt)}
             />
             <CardContent>
               <TextField
@@ -78,8 +87,9 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
               <FormControl>
                 <FormLabel>Estado:</FormLabel>
                 <RadioGroup row value={status} onChange={onRadioChange}>
-                  {validStatus.map((option) => (
+                  {validStatus.map((option, i) => (
                     <FormControlLabel
+                      key={i}
                       value={option}
                       control={<Radio />}
                       label={capitalize(option)}
@@ -103,7 +113,10 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
         </Grid>
       </Grid>
 
-      <IconButton sx={{ position: "fixed", bottom: 30, rigth: 30 }}>
+      <IconButton
+        sx={{ position: "fixed", bottom: 30, rigth: 30 }}
+        onClick={onDeleteEntry}
+      >
         <DeleteOutlineIcon />
       </IconButton>
     </Layout>
@@ -116,6 +129,8 @@ import { GetServerSideProps } from "next";
 import { dbEntries } from "@/database";
 import { EntriesContext } from "@/context/entries";
 import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
+import { dateFunction } from "@/utils";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params as { id: string };
@@ -138,3 +153,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 export default EntryPage;
+function onEntryDeleted(arg0: { _id: any }) {
+  throw new Error("Function not implemented.");
+}

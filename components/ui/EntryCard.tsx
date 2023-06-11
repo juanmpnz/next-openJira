@@ -10,28 +10,35 @@ import {
 } from "@mui/material";
 import { UiContext } from "@/context/ui";
 import { useRouter } from "next/router";
+import { dateFunction } from "@/utils";
 
 interface Props {
   entry: Entry;
 }
 
 export const EntryCard: FC<Props> = ({ entry }) => {
-  const router = useRouter()
-  const {startDragging, endDragging } = useContext(UiContext)
- 
+  const router = useRouter();
+  const { startDragging, endDragging } = useContext(UiContext);
+
   const onDrawStart = (event: DragEvent) => {
-    startDragging()
+    startDragging();
     event.dataTransfer.setData("text", entry._id as string);
   };
 
-  const onDragEnd = () => endDragging()
+  const onDragEnd = () => endDragging();
 
   const onClick = () => {
-    router.push(`/entries/${entry._id}`)
-  }
+    router.push(`/entries/${entry._id}`);
+  };
 
   return (
-    <Card onClick={onClick} sx={{ marginBottom: 1 }} draggable onDragStart={onDrawStart} onDragEnd={onDragEnd}>
+    <Card
+      onClick={onClick}
+      sx={{ marginBottom: 1 }}
+      draggable
+      onDragStart={onDrawStart}
+      onDragEnd={onDragEnd}
+    >
       <CardActionArea>
         <CardContent>
           <Typography sx={{ whiteSpace: "pre-line" }}>
@@ -41,7 +48,9 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         <CardActions
           sx={{ display: "flex", justifyContent: "end", paddingRight: 2 }}
         >
-          <Typography variant="body2">Hace 30 min</Typography>
+          <Typography variant="body2">
+            {dateFunction.getFormatDistanceToNow(entry.createdAt)}
+          </Typography>
         </CardActions>
       </CardActionArea>
     </Card>

@@ -30,7 +30,7 @@ export const Sidebar = () => {
         </Box>
         <List>
           {menuItems.map((text, i) => (
-            <ListItem button key={"text"} >
+            <ListItem key={i} >
               <ListItemIcon>
                 {i % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -41,7 +41,7 @@ export const Sidebar = () => {
         <Divider/>
         <List>
           {menuItems.map((text, i) => (
-            <ListItem button key={"text"} >
+            <ListItem key={i} >
               <ListItemIcon>
                 {i % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>

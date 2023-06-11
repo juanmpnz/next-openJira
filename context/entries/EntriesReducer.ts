@@ -4,7 +4,8 @@ import { EntriesState } from "./EntriesProviders";
 type EntriesTypes =
   | { type: "[entry] - Add-entry",payload: Entry }
   | { type: "[entry] - Entry-updated",payload: Entry }
-  | { type: "[entry] - Refresh-entries", payload: Entry[]};
+  | { type: "[entry] - Refresh-entries", payload: Entry[]}
+ 
 
 export const entriesReducer = (
   state: EntriesState,
@@ -25,7 +26,9 @@ export const entriesReducer = (
       return {
         ...state,
         entries: state.entries.map((entry) => {
+   
           if (entry._id === action.payload._id) {
+            console.log(entry)
             entry.status = action.payload.status;
             entry.description = action.payload.description;
           }

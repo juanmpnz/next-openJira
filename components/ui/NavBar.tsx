@@ -1,9 +1,9 @@
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UiContext } from "@/context/ui";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import { getCookie, removeCookie, setCookie } from "@/utils/cookieManagment";
 
 export const NavBar = () => {
   const { openSideMenu } = useContext(UiContext);
@@ -14,7 +14,6 @@ export const NavBar = () => {
         <IconButton onClick={openSideMenu}>
           <MenuIcon />
         </IconButton>
-
         <Typography
           style={{ cursor: "pointer" }}
           onClick={() => router.push("/")}

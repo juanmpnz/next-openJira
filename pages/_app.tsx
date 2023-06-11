@@ -7,6 +7,7 @@ import { EntriesProvider } from "@/context/entries";
 import { SnackbarProvider } from "notistack";
 
 export default function App({ Component, pageProps }: AppProps) {
+  console.log(pageProps)
   return (
     <SnackbarProvider autoHideDuration={3000}>
       <EntriesProvider>

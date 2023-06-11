@@ -1,17 +1,21 @@
 import { FC, useReducer } from "react";
 import { UiContext, uiReducer } from "./";
 import React from "react";
+import { EntryStatus } from "@/interfaces";
+import { entriesApi } from "@/apis";
 
 export interface UiState {
   sideMenuOpen: boolean;
   isAddingEntry: boolean;
   isDragging: boolean;
+  statusValid: [];
 }
 
 const UI_INITIAL_STATE: UiState = {
   sideMenuOpen: false,
   isAddingEntry: false,
   isDragging: false,
+  statusValid: [],
 };
 
 export const UiProvider: FC = ({ children }: any) => {
@@ -36,7 +40,7 @@ export const UiProvider: FC = ({ children }: any) => {
   const endDragging = () => {
     dispatch({ type: "UI - End dragging" });
   };
-
+ 
   return (
     <UiContext.Provider
       value={{
@@ -45,7 +49,7 @@ export const UiProvider: FC = ({ children }: any) => {
         openSideMenu,
         setIsAddingEntry,
         startDragging,
-        endDragging
+        endDragging,
       }}
     >
       {children}

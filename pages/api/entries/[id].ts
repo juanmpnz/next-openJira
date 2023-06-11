@@ -18,6 +18,8 @@ export default function handler(
       return updateEntry(req, res);
     case "GET":
       return getEntry(req, res);
+    case "DELETE":
+      return deleteEntry(req, res);
     default:
       return res.status(400).json({ message: "Methodo no existe" });
   }
@@ -59,12 +61,23 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
-
   await db.connect();
   const entryId = await Entry.findById(id);
   await db.disconnect();
   if (!entryId) {
-    return res.status(400).json({ message: "La entrada no existe" });
+    res.status(400).json({ message: "La entrada no existe" });
   }
-  return res.status(200).json(entryId);
+  res.status(200).json(entryId);
+};
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id } = req.query;
+  try {
+    await db.connect(); // conecto la db
+    await Entry.findByIdAndDelete(id);
+    await db.disconnect();
+    res.status(201).json({ message: "Tarea eliminada" });
+  } catch (error) {
+    res.status(500).json({ message: "Aglo salio mal" });
+  }
 };

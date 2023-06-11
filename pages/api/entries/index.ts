@@ -2,7 +2,6 @@
 import { db } from "@/database";
 
 import { Entry, IEntry } from "@/models";
-import mongoose from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = { message: string } | IEntry;
@@ -34,11 +33,11 @@ const addEntry = async (req: NextApiRequest, res: NextApiResponse) => {
     description,
     createdAt: Date.now(),
   });
+  
 
   try {
     await db.connect(); // conecto la db
     await newEntry.save(); // guardo en la base de datos
-    await db.connect(); // desconecto la db
     res.status(201).json(newEntry); //envio 201 creado con el objeto de la entrada
   } catch (error) {
     console.log(error);
@@ -46,4 +45,5 @@ const addEntry = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
- 
+
+

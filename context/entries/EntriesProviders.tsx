@@ -28,7 +28,17 @@ export const EntriesProvider: FC = ({ children }: any) => {
         description,
         status,
       });
+      console.log(data, "·")
       dispatch({ type: "[entry] - Entry-updated", payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onEntryDeleted = async ( _id: string | {}) => {
+    try {
+      await entriesApi.delete<Entry>(`entries/${_id}`);
+      refreshEntries();
     } catch (err) {
       console.log(err);
     }
@@ -39,9 +49,9 @@ export const EntriesProvider: FC = ({ children }: any) => {
     dispatch({ type: "[entry] - Refresh-entries", payload: data });
   };
 
-  useEffect(() => {
+ useEffect(() => {
     refreshEntries();
-  }, []);
+  }, []); 
 
   return (
     <EntriesContext.Provider
@@ -49,6 +59,7 @@ export const EntriesProvider: FC = ({ children }: any) => {
         ...state,
         addNewEntry,
         onEntryUpdated,
+        onEntryDeleted
       }}
     >
       {children}
